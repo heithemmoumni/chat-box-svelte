@@ -1,13 +1,15 @@
 <script>
-  let refBoxChat;
-  let refButton;
-  let isActive = true;
+  let refBoxChat
+  let refButton
+  let isActive = true
   let isOpen = true
 
-  function handleClick() {
-    refBoxChat.style.display = 'block'
-  }
+  let show = false
 
+
+  function toggle() {
+    show = !show
+  }
 
 </script>
 
@@ -18,6 +20,7 @@
     right: 20px;
     margin-bottom: 20px;
   }
+
   .chat-toggler__box {
     border: solid 1px #3287fa;
     background: #3287fa;
@@ -55,7 +58,8 @@
     border-top-right-radius: 1.4rem;
     color: white;
   }
-  .notification-circle{
+
+  .notification-circle {
     position: absolute;
     top: 0;
     right: 0;
@@ -67,24 +71,31 @@
 
 </style>
 
-<div class="chat-box">
-  <div class="chat-group chat-box__box" bind:this={refBoxChat}>
-    <div class="chat-header__box">
-      <h1 class="welcome">Welcome</h1>
-    </div>
-    <div class="chat-body__box">
-    </div>
-  </div>
 
+<div class="chat-box">
+
+  {#if show}
+    <div class="chat-group chat-box__box" bind:this={refBoxChat}>
+      <div class="chat-header__box">
+        <h1 class="welcome">Welcome</h1>
+      </div>
+      <div class="chat-body__box">
+      </div>
+    </div>
+  {/if}
 
   <button class="chat-toggler__box"
-          on:click={handleClick}
+          on:click={toggle}
           bind:this={refButton}>
-    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23">
-      <g fill="none" fill-rule="evenodd" stroke="#FFF" stroke-linecap="round" stroke-width="2">
-        <path d="M1.025 21.906l20.88-20.88M1.025 1.025l20.88 20.88"/>
-      </g>
-    </svg>
+    {#if show}
+      <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23">
+        <g fill="none" fill-rule="evenodd" stroke="#FFF" stroke-linecap="round" stroke-width="2">
+          <path d="M1.025 21.906l20.88-20.88M1.025 1.025l20.88 20.88"/>
+        </g>
+      </svg>
+      {:else}
+        Click
+      {/if}
     {#if isActive && !isOpen}
       <span class="notification-circle"></span>
     {/if}
